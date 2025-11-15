@@ -3,19 +3,40 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Мой первый сайт на Vercel</title>
+  <title>Мой сайт с кнопкой</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', sans-serif;
       text-align: center;
       margin-top: 100px;
-      background: #f0f0f0;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      min-height: 100vh;
     }
-    h1 { color: #0070f3; }
+    h1 { font-size: 3rem; margin-bottom: 20px; }
+    .btn {
+      padding: 15px 30px;
+      font-size: 1.2rem;
+      background: #ff6b6b;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+      transition: all 0.3s;
+    }
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 20px rgba(0,0,0,0.3);
+    }
+    .btn:active {
+      transform: translateY(1px);
+    }
   </style>
 </head>
 <body>
   <h1>Привет, мир! 🌍</h1>
-  <p>Этот сайт работает через Vercel + GitHub!</p>
+  <p>Нажми кнопку — и будет магия!</p>
+  <button class="btn" onclick="alert('Кнопка работает! 🎉')">Нажми меня!</button>
 </body>
 </html>
