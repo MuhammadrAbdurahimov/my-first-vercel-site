@@ -3,40 +3,148 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Мой сайт с кнопкой</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      text-align: center;
-      margin-top: 100px;
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      color: white;
-      min-height: 100vh;
-    }
-    h1 { font-size: 3rem; margin-bottom: 20px; }
-    .btn {
-      padding: 15px 30px;
-      font-size: 1.2rem;
-      background: #ff6b6b;
-      color: white;
-      border: none;
-      border-radius: 50px;
-      cursor: pointer;
-      box-shadow: 0 8px 15px rgba(0,0,0,0.2);
-      transition: all 0.3s;
-    }
-    .btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 20px rgba(0,0,0,0.3);
-    }
-    .btn:active {
-      transform: translateY(1px);
-    }
-  </style>
+  <title>Конвертер валют</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
 </head>
 <body>
-  <h1>Привет, мир! 🌍</h1>
-  <p>Нажми кнопку — и будет магия!</p>
-  <button class="btn" onclick="alert('Кнопка работает! 🎉')">Нажми меня!</button>
+  <div class="container">
+    <!-- Переключатель языка -->
+    <div class="lang-switcher">
+      <button class="lang-btn active" data-lang="ru">RU</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+      <button class="lang-btn" data-lang="tj">TJ</button>
+    </div>
+
+    <!-- Вкладки -->
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="converter"><span data-key="tab_converter">Конвертер</span></button>
+      <button class="tab-btn" data-tab="exchange"><span data-key="tab_exchange">Обменник</span></button>
+      <button class="tab-btn" data-tab="resources"><span data-key="tab_resources">Ресурсы</span></button>
+      <button class="tab-btn" data-tab="about"><span data-key="tab_about">Инфо</span></button>
+    </div>
+
+    <!-- === КОНВЕРТЕР === -->
+    <div id="converter" class="tab-content active">
+      <h1 data-key="title_converter">Конвертер валют</h1>
+      <div class="converter">
+        <div class="input-group">
+          <label for="amount" data-key="label_amount">Сумма</label>
+          <input type="number" id="amount" value="1" min="0" placeholder="1.00" />
+        </div>
+        <div class="currency-group">
+          <div class="from">
+            <label for="from-currency" data-key="label_from">Из</label>
+            <select id="from-currency"></select>
+          </div>
+          <button id="swap-btn" title="Поменять валюты">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M7 17L17 7M17 7H7M17 7V17"/>
+            </svg>
+          </button>
+          <div class="to">
+            <label for="to-currency" data-key="label_to">В</label>
+            <select id="to-currency"></select>
+          </div>
+        </div>
+        <button id="convert-btn" data-key="btn_convert">Конвертировать</button>
+        <div class="result" id="result">
+          <p>1 USD = 96.50 RUB</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- === ОБМЕННИК === -->
+    <div id="exchange" class="tab-content">
+      <h1 data-key="tab_exchange">Обменник</h1>
+      <div class="exchange-controls">
+        <div class="input-group">
+          <label for="exchange-amount" data-key="label_amount">Сумма</label>
+          <input type="number" id="exchange-amount" value="1" min="0" />
+        </div>
+        <div class="input-group">
+          <label for="base-currency" data-key="base_currency">Базовая валюта</label>
+          <select id="base-currency"></select>
+        </div>
+      </div>
+      <div class="search-box">
+        <input type="text" id="search-currency" placeholder="Поиск валюты..." />
+      </div>
+      <div class="exchange-table-container">
+        <table id="exchange-table">
+          <thead>
+            <tr>
+              <th data-key="table_flag">Флаг</th>
+              <th data-key="table_code">Код</th>
+              <th data-key="table_currency">Валюта</th>
+              <th data-key="table_rate">Курс</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- === РЕСУРСЫ === -->
+    <div id="resources" class="tab-content">
+      <h1 data-key="tab_resources">Ресурсы</h1>
+      <button id="refresh-resources" class="refresh-btn" data-key="refresh_prices">Обновить цены</button>
+      <div class="resources-table-container">
+        <table id="resources-table">
+          <thead>
+            <tr>
+              <th>Металл</th>
+              <th>Валюта</th>
+              <th>Цена за грамм</th>
+              <th>Изменение</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <p class="disclaimer" data-key="disclaimer">
+        Данные обновляются в реальном времени. Источник: metals.live + exchangerate-api.com
+      </p>
+    </div>
+
+    <!-- === ИНФО === -->
+    <div id="about" class="tab-content">
+      <h1 data-key="info_title">Информация о проекте</h1>
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="icon">API</div>
+          <h3 data-key="info_api">Курсы валют</h3>
+          <p>exchangerate-api.com</p>
+          <a href="https://www.exchangerate-api.com" target="_blank" class="link">exchangerate-api.com</a>
+        </div>
+        <div class="info-card">
+          <div class="icon gold">Gold</div>
+          <h3 data-key="info_gold">Цены на золото</h3>
+          <p>metals.live</p>
+          <a href="https://metals.live" target="_blank" class="link">metals.live</a>
+        </div>
+        <div class="info-card">
+          <div class="icon">Code</div>
+          <h3 data-key="info_author">Разработчик</h3>
+          <p>Открытый код</p>
+          <a href="https://github.com" target="_blank" class="link">GitHub</a>
+        </div>
+        <div class="info-card">
+          <div class="icon">Share</div>
+          <h3 data-key="info_share">Поддержать</h3>
+          <p>Поделись с друзьями</p>
+          <button class="support-btn" data-key="info_share_btn" onclick="navigator.share?.({title: 'Конвертер валют', url: location.href})">
+            Поделиться
+          </button>
+        </div>
+      </div>
+      <p class="footer-note">
+        <strong data-key="version">Версия:</strong> 2.0 • 
+        <strong data-key="updated_on">Обновлено:</strong> 15 ноября 2025
+      </p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
